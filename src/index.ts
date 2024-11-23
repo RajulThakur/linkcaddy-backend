@@ -40,8 +40,8 @@ app.use(`${BASE_URL}/brain`, shareRoutes);
 
 
 //Protected Routes
-app.use(`${BASE_URL}`, verifyLogin, userRoutes);
-app.use(`${BASE_URL}`, verifyLogin, contentRoutes);
+app.use(`${BASE_URL}`, userRoutes);
+app.use(`${BASE_URL}`, contentRoutes);
 
 //Server
 app.listen(process.env.PORT, () => {
