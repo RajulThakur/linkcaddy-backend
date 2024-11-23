@@ -35,10 +35,10 @@ connectDB();
 //Routes
 
 //Public Routes
+app.use(`${BASE_URL}`, authRoutes);
 app.use(`${BASE_URL}/brain`, shareRoutes);
 
 
-app.use(`${BASE_URL}`, authRoutes);
 //Protected Routes
 app.use(`${BASE_URL}`, verifyLogin, userRoutes);
 app.use(`${BASE_URL}`, verifyLogin, contentRoutes);
