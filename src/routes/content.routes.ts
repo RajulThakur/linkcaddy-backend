@@ -7,7 +7,7 @@ import {
 import { verifyLogin } from "../middleware/auth.middleware";
 const router = express.Router();
 
-router.post("/content", handleAddContent );
+router.post("/content",verifyLogin, handleAddContent );
 router.get("/content", handleGetContent );
-router.delete("/delete", handleDeleteContent );
+router.delete("/delete", verifyLogin, handleDeleteContent );
 export default router;
