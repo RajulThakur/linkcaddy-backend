@@ -3,8 +3,9 @@ import {
   handleShareContent,
   handleGetSharedContent,
 } from '../controllers/share.controller';
+import { verifyLogin } from '../middleware/auth.middleware';
 const router = express.Router();
 
-router.post('/share', handleShareContent);
+router.post('/share', verifyLogin, handleShareContent);
 router.get('/share', handleGetSharedContent);
 export default router;

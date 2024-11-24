@@ -4,26 +4,17 @@ import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
 import Content from '../schema/Content';
 import User from '../schema/User';
+import AuthRequest from '../interface/AuthRequest';
 
 export const handleShareContent = async (
-  req: Request,
+  req: AuthRequest,
   res: Response
 ): Promise<any> => {
   try {
-    const token = req.cookies.token;
-    if (!token) {
-      return res.status(401).json({
-        success: false,
-        message: 'Authentication required',
-      });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
-      userId: string;
-    };
-    const hash = await bcrypt.hash(decoded.userId, 9);
-    await Link.create({ userId: decoded.userId, hash });
-
+    const hash =  bcrypt.hashSync(req.userId as string, 3);
+    console.log('hash', hash);
+    const link = await Link.create({ userId: req.userId, hash });
+    console.log('link', link);
     res.status(200).json({
       success: true,
       link: `share?shareid=${hash}`,
