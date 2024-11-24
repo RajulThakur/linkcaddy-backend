@@ -56,7 +56,7 @@ export const handleSignin = async (
       .json({
         success: true,
         message: 'Logged in successfully',
-        id: user._id,
+        token,
       });
   } catch (error) {
     res.status(500).json({

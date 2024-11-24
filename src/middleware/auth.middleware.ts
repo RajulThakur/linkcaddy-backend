@@ -8,7 +8,7 @@ export const verifyLogin = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const token = req.cookies?.token;
+  const {token}=req.body;
   console.log("req cookies",req.cookies);
   console.log('middleware token', token);
   if (!token) {
