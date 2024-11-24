@@ -10,7 +10,8 @@ export const handleSignin = async (
 ): Promise<any> => {
   try {
     const { userName, password } = req.body;
-
+    console.log("username",userName);
+    console.log("password",password);
     if (!userName || !password) {
       return res.status(400).json({
         success: false,
@@ -22,6 +23,7 @@ export const handleSignin = async (
       { userName },
       "hashPassword",
     );
+    console.log("user",user)
 
     if (!user) {
       return res.status(401).json({
@@ -42,12 +44,13 @@ export const handleSignin = async (
       { userId: user._id },
       process.env.JWT_SECRET as string,
     );
+    console.log("token",token);
     res
       .status(200)
       .cookie("token", token, {
         httpOnly: true,
         secure: true,
-        sameSite: 'none',
+        sameSite:process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         maxAge: 7 * 24 * 60 * 60 * 1000,
         path: '/',
         domain: process.env.NODE_ENV === 'production' 
