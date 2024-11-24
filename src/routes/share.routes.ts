@@ -1,10 +1,10 @@
-import express from "express";
+import express from 'express';
 import {
   handleShareContent,
   handleGetSharedContent,
-} from "../controllers/share.controller";
+} from '../controllers/share.controller';
 const router = express.Router();
 
-router.post("/share", handleShareContent);
-router.get("/share", handleGetSharedContent);
+router.post('/share', handleShareContent);
+router.get('/share', handleGetSharedContent);
 export default router;

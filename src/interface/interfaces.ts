@@ -1,4 +1,4 @@
-import { ObjectId } from "mongoose";
+import { ObjectId } from 'mongoose';
 
 export interface UserInterface {
   _id?: string | ObjectId;
@@ -29,4 +29,4 @@ export interface ContentInterface {
   userId: string;
   createdAt?: Date;
 }
-export type ContentType = "text" | "image" | "list";
+export type ContentType = 'text' | 'image' | 'list';

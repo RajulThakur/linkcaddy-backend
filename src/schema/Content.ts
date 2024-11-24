@@ -1,9 +1,9 @@
-import { model, Schema } from "mongoose";
-import { ContentInterface } from "../interface/interfaces";
-import UserModel from "./User";
+import { model, Schema } from 'mongoose';
+import { ContentInterface } from '../interface/interfaces';
+import UserModel from './User';
 
-const IdeaTypes: string[] = ["links", "videos", "tweets", "documents"];
-const ContentTypes: string[] = ["text", "image", "list"];
+const IdeaTypes: string[] = ['links', 'videos', 'tweets', 'documents'];
+const ContentTypes: string[] = ['text', 'image', 'list'];
 
 const Content = new Schema<ContentInterface>({
   link: { type: String, required: true },
@@ -11,11 +11,11 @@ const Content = new Schema<ContentInterface>({
   title: { type: String, required: true },
   contentType: { type: String, required: true, enum: ContentTypes },
   content: { type: String, required: true },
-  tags: [{ type: String, ref: "Tags" }],
+  tags: [{ type: String, ref: 'Tags' }],
   userId: {
     type: String,
     required: true,
-    ref: "User",
+    ref: 'User',
     validate: async (id: string): Promise<void | Error> => {
       const user = await UserModel.findById(id);
       if (!user) throw new Error("User Don't Exists");
@@ -23,4 +23,4 @@ const Content = new Schema<ContentInterface>({
   },
   createdAt: { type: Date, default: Date.now },
 });
-export default model<ContentInterface>("Content", Content);
+export default model<ContentInterface>('Content', Content);

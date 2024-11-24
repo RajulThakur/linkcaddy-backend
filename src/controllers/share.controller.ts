@@ -1,20 +1,20 @@
-import Link from "../schema/Link";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
-import { Request, Response } from "express";
-import Content from "../schema/Content";
-import User from "../schema/User";
+import Link from '../schema/Link';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+import { Request, Response } from 'express';
+import Content from '../schema/Content';
+import User from '../schema/User';
 
 export const handleShareContent = async (
   req: Request,
-  res: Response,
+  res: Response
 ): Promise<any> => {
   try {
     const token = req.cookies.token;
     if (!token) {
       return res.status(401).json({
         success: false,
-        message: "Authentication required",
+        message: 'Authentication required',
       });
     }
 
@@ -31,14 +31,14 @@ export const handleShareContent = async (
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Something went wrong",
+      message: 'Something went wrong',
     });
   }
 };
 
 export const handleGetSharedContent = async (
   req: Request,
-  res: Response,
+  res: Response
 ): Promise<any> => {
   try {
     const shareid = req.query.shareid as string;
@@ -46,7 +46,7 @@ export const handleGetSharedContent = async (
     if (!shareid) {
       return res.status(400).json({
         status: false,
-        message: "Share ID is required",
+        message: 'Share ID is required',
       });
     }
 
@@ -56,7 +56,7 @@ export const handleGetSharedContent = async (
     if (!linkDoc) {
       return res.status(404).json({
         status: false,
-        message: "Share link not found",
+        message: 'Share link not found',
       });
     }
 
@@ -70,7 +70,7 @@ export const handleGetSharedContent = async (
 
     res.status(200).json({
       status: true,
-      message: "Successfully retrieved shared content",
+      message: 'Successfully retrieved shared content',
       content: {
         sharedContent,
         sharedBy: `${user?.firstName} ${user?.lastName}`,
@@ -79,7 +79,7 @@ export const handleGetSharedContent = async (
   } catch (error) {
     res.status(500).json({
       status: false,
-      message: "Something went wrong",
+      message: 'Something went wrong',
     });
   }
 };

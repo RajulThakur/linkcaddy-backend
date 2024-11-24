@@ -1,34 +1,34 @@
-import { Request, Response } from "express";
-import { UserInterface } from "../interface/interfaces";
-import UserModel from "../schema/User";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import { Request, Response } from 'express';
+import { UserInterface } from '../interface/interfaces';
+import UserModel from '../schema/User';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 export const handleSignin = async (
   req: Request,
-  res: Response,
+  res: Response
 ): Promise<any> => {
   try {
     const { userName, password } = req.body;
-    console.log("username",userName);
-    console.log("password",password);
+    console.log('username', userName);
+    console.log('password', password);
     if (!userName || !password) {
       return res.status(400).json({
         success: false,
-        message: "Username and password are required",
+        message: 'Username and password are required',
       });
     }
 
     const user: UserInterface | null = await UserModel.findOne(
       { userName },
-      "hashPassword",
+      'hashPassword'
     );
-    console.log("user",user)
+    console.log('user', user);
 
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: "Invalid username",
+        message: 'Invalid username',
       });
     }
 
@@ -36,50 +36,51 @@ export const handleSignin = async (
     if (!isMatch) {
       return res.status(401).json({
         success: false,
-        message: "Invalid credentials",
+        message: 'Invalid credentials',
       });
     }
 
     const token = jwt.sign(
       { userId: user._id },
-      process.env.JWT_SECRET as string,
+      process.env.JWT_SECRET as string
     );
-    console.log("token",token);
+    console.log('token', token);
     res
       .status(200)
-      .cookie("token", token, {
+      .cookie('token', token, {
         httpOnly: true,
         secure: true,
-        sameSite:process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         maxAge: 7 * 24 * 60 * 60 * 1000,
         path: '/',
-        domain: process.env.NODE_ENV === 'production' 
-          ? "brainly-100x.vercel"
-          : 'localhost'
+        domain:
+          process.env.NODE_ENV === 'production'
+            ? 'brainly-100x.vercel'
+            : 'localhost',
       })
       .json({
         success: true,
-        message: "Logged in successfully",
+        message: 'Logged in successfully',
         id: user._id,
       });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Internal server error",
+      message: 'Internal server error',
     });
   }
 };
 
 export const handleSignup = async (
   req: Request,
-  res: Response,
+  res: Response
 ): Promise<any> => {
   try {
     const { firstName, lastName, userName, password } = req.body;
     if (!firstName || !lastName || !userName || !password) {
       return res.status(400).json({
         success: false,
-        message: "All fields are required",
+        message: 'All fields are required',
       });
     }
 
@@ -93,7 +94,7 @@ export const handleSignup = async (
 
     res.status(201).json({
       success: true,
-      message: "User successfully created",
+      message: 'User successfully created',
       user: {
         firstName: newUser.firstName,
         lastName: newUser.lastName,
@@ -103,16 +104,16 @@ export const handleSignup = async (
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Internal server error",
+      message: 'Internal server error',
     });
   }
 };
 
 export const handleLogout = async (
   req: Request,
-  res: Response,
+  res: Response
 ): Promise<any> => {
-  res.cookie("token", "", {
+  res.cookie('token', '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
@@ -122,6 +123,6 @@ export const handleLogout = async (
 
   res.status(200).json({
     success: true,
-    message: "Logged out successfully",
+    message: 'Logged out successfully',
   });
 };

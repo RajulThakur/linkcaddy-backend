@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import AuthRequest from "../interface/AuthRequest";
+import { NextFunction, Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import AuthRequest from '../interface/AuthRequest';
 
 export const verifyLogin = async (
   req: Request,
@@ -8,9 +8,9 @@ export const verifyLogin = async (
   next: NextFunction
 ): Promise<void> => {
   const token = req.cookies?.token;
-  console.log("middleware token",token);
+  console.log('middleware token', token);
   if (!token) {
-    res.status(401).json({ message: "Unauthorized" });
+    res.status(401).json({ message: 'Unauthorized' });
     return;
   }
 
@@ -22,6 +22,6 @@ export const verifyLogin = async (
 
     next();
   } catch (error) {
-    res.status(401).json({ message: "Unauthorized" });
+    res.status(401).json({ message: 'Unauthorized' });
   }
 };

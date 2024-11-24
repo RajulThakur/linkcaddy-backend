@@ -1,5 +1,5 @@
-import { model, Schema } from "mongoose";
-import { UserInterface } from "../interface/interfaces";
+import { model, Schema } from 'mongoose';
+import { UserInterface } from '../interface/interfaces';
 
 const User = new Schema<UserInterface>({
   firstName: { type: String, require: true },
@@ -8,4 +8,4 @@ const User = new Schema<UserInterface>({
   hashPassword: { type: String, require: true },
 });
 
-export default model<UserInterface>("User", User);
+export default model<UserInterface>('User', User);
