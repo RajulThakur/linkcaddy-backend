@@ -7,8 +7,6 @@ import { connectDB } from './config/Database';
 import authRoutes from './routes/auth.routes';
 import contentRoutes from './routes/content.routes';
 import shareRoutes from './routes/share.routes';
-import { verifyLogin } from './middleware/auth.middleware';
-import userRoutes from './routes/user.routes';
 dotenv.config();
 
 //Middleware
@@ -48,9 +46,8 @@ app.use(`${BASE_URL}/test`, (req, res) => {
 app.use(`${BASE_URL}`, authRoutes);
 app.use(`${BASE_URL}/brain`, shareRoutes);
 
-app.use(`${BASE_URL}`, verifyLogin, userRoutes);
 //Protected Routes
-app.use(`${BASE_URL}`, verifyLogin, contentRoutes);
+app.use(`${BASE_URL}`, contentRoutes);
 
 
 //Server

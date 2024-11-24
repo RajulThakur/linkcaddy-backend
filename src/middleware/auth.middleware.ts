@@ -9,7 +9,6 @@ export const verifyLogin = async (
   next: NextFunction
 ): Promise<void> => {
   const {token}=req.body;
-  console.log("req cookies",req.cookies);
   console.log('middleware token', token);
   if (!token) {
     res.status(401).json({ message: 'Unauthorized' });

@@ -1,7 +1,8 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import AuthRequest from '../interface/AuthRequest';
 import Content from '../schema/Content';
 import { generateContent } from './helperContent';
+import jwt from 'jsonwebtoken';
 export const handleAddContent = async (
   req: AuthRequest,
   res: Response
@@ -33,11 +34,16 @@ export const handleAddContent = async (
 };
 
 export const handleGetContent = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<any> => {
   try {
-    const data = await Content.find({ userId: req.userId });
+    const {token} = req.query;
+    console.log("get-content token",token);
+    const decoded = jwt.verify(token as string, process.env.JWT_SECRET as string) as {
+      userId: string;
+    };
+    const data = await Content.find({ userId: decoded.userId });
 
     res.status(200).json({
       success: true,
