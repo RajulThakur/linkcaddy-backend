@@ -39,6 +39,10 @@ app.use(cookieParser());
 connectDB();
 
 //Routes
+app.use(`${BASE_URL}/test`, (req, res) => {
+  res.json({status:true,message:"You are connected"});
+  console.log('You are connected');
+});
 
 //Public Routes
 app.use(`${BASE_URL}`, authRoutes);
@@ -48,11 +52,6 @@ app.use(`${BASE_URL}`, verifyLogin, userRoutes);
 //Protected Routes
 app.use(`${BASE_URL}`, verifyLogin, contentRoutes);
 
-app.use(`${BASE_URL}/test`, (req, res) => {
-  console.log('req', req);
-  res.send('Hello World');
-  console.log('You are connected');
-});
 
 //Server
 app.listen(process.env.PORT, () => {
