@@ -49,13 +49,7 @@ export const handleSignin = async (
       .status(200)
       .cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        path: '/',
-        domain:
-          process.env.NODE_ENV === 'production'
-            ? 'brainly-100x.vercel.app'
-            : 'localhost',
       })
       .json({
         success: true,
