@@ -1,13 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import AuthRequest from '../interface/AuthRequest';
-
+import dotenv from 'dotenv';
+dotenv.config();
 export const verifyLogin = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
   const token = req.cookies?.token;
+  console.log("req cookies",req.cookies);
   console.log('middleware token', token);
   if (!token) {
     res.status(401).json({ message: 'Unauthorized' });
@@ -19,7 +21,7 @@ export const verifyLogin = async (
       userId: string;
     };
     (req as AuthRequest).userId = decoded.userId;
-
+    console.log("middleware decoded",decoded);
     next();
   } catch (error) {
     res.status(401).json({ message: 'Unauthorized' });
