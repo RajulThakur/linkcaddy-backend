@@ -3,6 +3,7 @@ import AuthRequest from '../interface/AuthRequest';
 import Content from '../schema/Content';
 import { generateContent } from './helperContent';
 import jwt from 'jsonwebtoken';
+import { getFavicon } from '../helper/getFacicon';
 export const handleAddContent = async (
   req: AuthRequest,
   res: Response
@@ -25,9 +26,10 @@ export const handleAddContent = async (
       message: 'Post created successfully',
       data,
     });
-  } catch (error) {
+  } catch (error:any) {
     res.status(500).json({
       success: false,
+      error:error.message,
       message: 'Internal server error',
     });
   }
@@ -39,7 +41,6 @@ export const handleGetContent = async (
 ): Promise<any> => {
   try {
     const {token} = req.query;
-    console.log("get-content token",token);
     const decoded = jwt.verify(token as string, process.env.JWT_SECRET as string) as {
       userId: string;
     };

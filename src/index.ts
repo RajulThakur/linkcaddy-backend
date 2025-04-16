@@ -15,21 +15,6 @@ const app = express();
 // CORS should be before other middleware
 app.use(cors(corsOptions));
 
-// Security headers
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
-  res.header(
-    'Access-Control-Allow-Methods',
-    'GET,PUT,POST,DELETE,UPDATE,OPTIONS'
-  );
-  res.header(
-    'Access-Control-Allow-Headers',
-    'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
-  );
-  next();
-});
-
 app.use(express.json());
 app.use(cookieParser());
 
@@ -49,9 +34,9 @@ app.use(`${BASE_URL}/brain`, shareRoutes);
 //Protected Routes
 app.use(`${BASE_URL}`, contentRoutes);
 
-
+const PORT=process.env.PORT || 4000
 //Server
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
   console.log('Starting...');
-  console.log(`App Started - http://localhost:${process.env.PORT}`);
+  console.log(`App Started - http://localhost:${PORT}`);
 });

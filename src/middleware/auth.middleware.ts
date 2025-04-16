@@ -9,7 +9,6 @@ export const verifyLogin = async (
   next: NextFunction
 ): Promise<void> => {
   const {token}=req.body;
-  console.log('middleware token', token);
   if (!token) {
     res.status(401).json({ message: 'Unauthorized' });
     return;
@@ -20,7 +19,6 @@ export const verifyLogin = async (
       userId: string;
     };
     (req as AuthRequest).userId = decoded.userId;
-    console.log("middleware decoded",decoded);
     next();
   } catch (error) {
     res.status(401).json({ message: 'Unauthorized' });

@@ -3,14 +3,14 @@ import { ContentInterface } from '../interface/interfaces';
 import UserModel from './User';
 
 const IdeaTypes: string[] = ['links', 'videos', 'tweets', 'documents'];
-const ContentTypes: string[] = ['text', 'image', 'list'];
+const ContentTypes: string[] = ['text', 'image', 'list', 'empty'];
 
 const Content = new Schema<ContentInterface>({
   link: { type: String, required: true },
   type: { type: String, required: true, enum: IdeaTypes },
   title: { type: String, required: true },
-  contentType: { type: String, required: true, enum: ContentTypes },
-  content: { type: String, required: true },
+  contentType: { type: String, enum: ContentTypes },
+  content: { type: String },
   tags: [{ type: String, ref: 'Tags' }],
   userId: {
     type: String,

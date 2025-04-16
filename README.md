@@ -1,6 +1,6 @@
-# Brainly Backend
+# Bookmarq Backend
 
-Backend service for the Brainly application that handles content management, authentication, and sharing.
+Backend service for the Bookmarq application that handles content management, authentication, and sharing.
 
 ## Setup
 

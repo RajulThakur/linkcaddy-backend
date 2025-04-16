@@ -12,9 +12,7 @@ export const handleShareContent = async (
 ): Promise<any> => {
   try {
     const hash =  bcrypt.hashSync(req.userId as string, 3);
-    console.log('hash', hash);
     const link = await Link.create({ userId: req.userId, hash });
-    console.log('link', link);
     res.status(200).json({
       success: true,
       link: `share?shareid=${hash}`,

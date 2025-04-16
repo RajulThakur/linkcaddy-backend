@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import getDomain from '../helper/getDomain';
 dotenv.config();
 export const generateContent = async (
   link: string,
@@ -18,16 +19,16 @@ export const generateContent = async (
     contentTypeData = 'text';
   }
   if (type === 'videos' || type === 'tweets') {
-    titleData = title || linkPreviewData?.title || link;
+    titleData = title || linkPreviewData?.title;
     contentData = linkPreviewData?.image || linkPreviewData?.description;
     contentTypeData = 'image';
   }
 
   return {
     link,
-    title: titleData,
+    title: titleData || getDomain(link),
     content: contentData,
-    contentType: contentTypeData,
+    contentType: contentTypeData || 'empty',
     type,
     tags,
   };
